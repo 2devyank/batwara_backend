@@ -47,7 +47,7 @@ app.post("/login",async(req,res)=>{
                 id:user.rows[0].person_id
             }
         },process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn:'5m'}
+        {expiresIn:'2h'}
         )
         res.status(200).json({accessToken});
         }
@@ -119,9 +119,10 @@ app.post("/expense",async(req,res)=>{
         console.log(err);
     }
 })
-app.get("/expense",async(req,res)=>{
+app.get("/expense/:id",async(req,res)=>{
     try{
-        const getexpense=await pool.query(`select * from expenses`);
+        const {id}=req.body;
+        const getexpense=await pool.query(`select * from expenses where group_id=$1`,[id]);
         res.json(getexpense.rows);
 
     }catch(err){
