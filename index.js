@@ -97,6 +97,17 @@ console.log(err);
     }
 })
 
+// app.get("/group/:groupid",async(req,res)=>{
+//     try{
+//         const {groupid}=req.params;
+// const getgroup=await pool.query(`SELECT * FROM memgroup where group_id=$1`,[groupid])
+// // console.log(getgroup)
+// res.json(getgroup.rows);
+//     }catch(err){
+// console.log(err);
+//     }
+// })
+
 app.put("/group/:id",async(req,res)=>{
     try{
         const {id} =req.params;
@@ -121,7 +132,7 @@ app.post("/expense",async(req,res)=>{
 })
 app.get("/expense/:id",async(req,res)=>{
     try{
-        const {id}=req.body;
+        const {id}=req.params;
         const getexpense=await pool.query(`select * from expenses where group_id=$1`,[id]);
         res.json(getexpense.rows);
 
