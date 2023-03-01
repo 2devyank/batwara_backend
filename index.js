@@ -140,6 +140,15 @@ app.get("/expense/:id",async(req,res)=>{
     console.log(err);
     }
 })
+app.get("/expense",async(req,res)=>{
+    try{
+const getexpense=await pool.query('select * from expenses');
+res.json(getexpense.rows);
+    }catch(e)
+    {
+        console.log(e);
+    }
+})
 
 
 
