@@ -66,12 +66,14 @@ app.get("/user",validateToken, async (req, res) => {
         console.log(err);
     }
 })
-app.put("/user",async(req,res)=>{
+
+app.get("/user/:query",async(req,res)=>{
     try{
-        const {payer}=req.body;
-        const postdata=await pool.query("update persons")
+const {query}=req.params;
+const getuser=await pool.query("SELECT * from search_perosn($1)",[query]);
+res.json(getuser.rows)
     }catch(err){
-        console.log(err);
+console.log(err);
     }
 })
 
