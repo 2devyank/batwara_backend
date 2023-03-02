@@ -87,13 +87,23 @@ app.post("/group", async (req, res) => {
     }
 })
 
-app.get("/group/:id",async(req,res)=>{
+// app.get("/group/:id",async(req,res)=>{
+//     try{
+//         const {id}=req.params;
+// const getgroup=await pool.query(`SELECT * FROM memgroup where person_id=$1`,[id])
+// res.json(getgroup.rows);
+//     }catch(err){
+// console.log(err);
+//     }
+// })
+
+app.get("/group/:member",async(req,res)=>{
     try{
-        const {id}=req.params;
-const getgroup=await pool.query(`SELECT * FROM memgroup where person_id=$1`,[id])
-res.json(getgroup.rows);
-    }catch(err){
-console.log(err);
+        const {member}=req.params;
+        const getgroup=await pool.query(`SELECT * FROM memgroup where $1=ANY(grpmember)`,[member])
+        res.json(getgroup.rows);
+    }catch(e){
+console.log(e);
     }
 })
 
