@@ -89,15 +89,15 @@ app.post("/group", async (req, res) => {
     }
 })
 
-// app.get("/group/:id",async(req,res)=>{
-//     try{
-//         const {id}=req.params;
-// const getgroup=await pool.query(`SELECT * FROM memgroup where person_id=$1`,[id])
-// res.json(getgroup.rows);
-//     }catch(err){
-// console.log(err);
-//     }
-// })
+app.get("/groupmem/:id",async(req,res)=>{
+    try{
+        const {id}=req.params;
+const getgroup=await pool.query(`SELECT * FROM memgroup where group_id=$1`,[id])
+res.json(getgroup.rows);
+    }catch(err){
+console.log(err);
+    }
+})
 
 app.get("/group/:member",async(req,res)=>{
     try{
@@ -134,9 +134,9 @@ app.put("/group/:id",async(req,res)=>{
 
 app.post("/expense",async(req,res)=>{
     try{
-        const {expense_id,payer,topic,totalprice,group_id}=req.body;
-        const postexpense=await pool.query(`insert into expenses (expense_id,group_id,payer,topic,totalprice) values ($1,$2,$3,$4,$5)`,
-        [expense_id,group_id,payer,topic,totalprice])
+        const {expense_id,payer,topic,totalprice,group_id,member}=req.body;
+        const postexpense=await pool.query(`insert into expenses (expense_id,group_id,payer,topic,totalprice,member) values ($1,$2,$3,$4,$5,$6)`,
+        [expense_id,group_id,payer,topic,totalprice,member])
         res.json(postexpense);
     }catch(err){
         console.log(err);
@@ -149,7 +149,7 @@ app.get("/expense/:id",async(req,res)=>{
         res.json(getexpense.rows);
 
     }catch(err){
-    console.log(err);
+    console.log(err); 
     }
 })
 app.get("/expense",async(req,res)=>{
