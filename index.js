@@ -109,17 +109,6 @@ console.log(e);
     }
 })
 
-// app.get("/group/:groupid",async(req,res)=>{
-//     try{
-//         const {groupid}=req.params;
-// const getgroup=await pool.query(`SELECT * FROM memgroup where group_id=$1`,[groupid])
-// // console.log(getgroup)
-// res.json(getgroup.rows);
-//     }catch(err){
-// console.log(err);
-//     }
-// })
-
 app.put("/group/:id",async(req,res)=>{
     try{
         const {id} =req.params;
@@ -152,16 +141,26 @@ app.get("/expense/:id",async(req,res)=>{
     console.log(err); 
     }
 })
-app.get("/expense",async(req,res)=>{
+app.get("/expensive/:member",async(req,res)=>{
     try{
-const getexpense=await pool.query('select * from expenses');
+        const {member}=req.params;
+const getexpense=await pool.query('select * from expenses where payer=$1',[member]);
 res.json(getexpense.rows);
     }catch(e)
     {
         console.log(e);
     }
 })
-
+app.get("/settle/:member",async(req,res)=>{
+    try{
+        const {member}=req.params;
+const getexpense=await pool.query(`select * from expenses where payer!=$1 and $1=ANY(member)`,[member]);
+res.json(getexpense.rows);
+    }catch(e)
+    {
+        console.log(e);
+    }
+})
 
 
 
