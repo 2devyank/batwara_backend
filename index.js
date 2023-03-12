@@ -112,9 +112,9 @@ console.log(e);
 app.put("/group/:id",async(req,res)=>{
     try{
         const {id} =req.params;
-        const {grpname,grpmember,group_id}=req.body;
+        const {grpmember}=req.body;
     
-        const updategroup=await pool.query(`UPDATE memgroup set grpmember=array_append(grpmember,$1) where grpname=$2 and group_id=$3`,[grpmember,grpname,group_id])
+        const updategroup=await pool.query(`UPDATE memgroup set grpmember=array_append(grpmember,$1) where group_id=$2`,[grpmember,id])
         res.json(updategroup.rows);
     }catch(err){
         console.log(err);
