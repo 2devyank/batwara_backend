@@ -70,7 +70,7 @@ app.get("/user",validateToken, async (req, res) => {
 app.get("/user/:query",async(req,res)=>{
     try{
 const {query}=req.params;
-const getuser=await pool.query("SELECT * from search_perosn($1)",[query]);
+const getuser=await pool.query("SELECT * from  persons where email like '%'||$1||'%'",[query]);
 res.json(getuser.rows)
     }catch(err){
 console.log(err);
