@@ -162,6 +162,14 @@ res.json(getexpense.rows);
     }
 })
 
+app.get("/persons",async(req,res)=>{
+    try{
+        const getperons=await pool.query("select * from persons");
+        res.json(getperons.rows);
+    }catch(e){
+        console.log(e);
+    }
+})
 
 
 
