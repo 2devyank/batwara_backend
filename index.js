@@ -6,10 +6,39 @@ const bcrypt =require("bcrypt");
 const jwt =require("jsonwebtoken");
 const validateToken = require("./middleware/validateToken");
 const dotenv=require("dotenv").config();
+const Razorpay=require('razorpay');
+
+
 
 app.use(cors());
 app.use(express.json());
 
+
+const razorpayInstance=new Razorpay({
+    key_id:process.env.RAZORPAY_KEY_ID,
+    key_secret:process.env.RAZORPAY_SECRET
+})
+
+
+app.post("/createOrder",(req,res)=>{
+    // const {amount,currency,receipt,notes}=req.body;
+    const amount=499;
+    const currency="INR";
+    const payment_capture=1;
+    const options={
+        amount:(amount*100).toString(),
+        currency,
+        receipt:"asdfasdfaswasf#412567",
+        payment_capture,
+    };
+
+    razorpayInstance.orders.create(options,(err,order)=>{
+        if(!err)
+        res.json(order)
+        else
+        res.send(err)
+    })
+});
 
 app.post("/register", async (req, res) => {
     try {
@@ -173,7 +202,7 @@ app.get("/persons",async(req,res)=>{
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log("listenning on port" + port)
 })
