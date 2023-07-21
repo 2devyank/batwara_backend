@@ -1,12 +1,9 @@
 const Pool=require("pg").Pool;
 const dotenv=require("dotenv").config();
+const connectionString=process.env.POSTGRES_LINK
 
 const pool=new  Pool({
-  user:"devyanknagpal",
-  password:"",
-  host:"localhost",
-  port:5433,
-  database:"template1"
+  connectionString
 })
 
 module.exports=pool;
