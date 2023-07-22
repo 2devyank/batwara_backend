@@ -1,6 +1,6 @@
 const Pool=require("pg").Pool;
 const dotenv=require("dotenv").config();
-const connectionString=process.env.POSTGRES_LINK
+const connectionString=process.env.DATABASE_URL
 
 const pool=new  Pool({
   connectionString
