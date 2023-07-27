@@ -21,8 +21,9 @@ const razorpayInstance=new Razorpay({
 
 
 app.post("/createOrder",(req,res)=>{
-    // const {amount,currency,receipt,notes}=req.body;
-    const amount=499;
+    const {amount}=req.body;
+    console.log(amount)
+    
     const currency="INR";
     const payment_capture=1;
     const options={
